@@ -1,25 +1,30 @@
 var bubblingModeEnable = false;
 
-var menuOpenned = false;
+var isMenuOpenned = false;
 
-var closerFavElem
+var menuOpenned;
+
+var closerFavElem;
 
 function openMenu(elem){
-    if(menuOpenned){
-        let child = elem.children;
-        for(let i = 0; i < child.length; i++){
-            let tableChild = child[i];
-            tableChild.removeAttribute('style');
+    if(elem.children.length > 1){
+        if(isMenuOpenned){
+            let child = elem.children;
+            for(let i = 0; i < child.length; i++){
+                let tableChild = child[i];
+                tableChild.removeAttribute('style');
+            }
+            isMenuOpenned  = false;
         }
-        menuOpenned = false;
-    }
-    else{
-        let child = elem.children;
-        for(let i = 0; i < child.length; i++){
-            let tableChild = child[i];
-            tableChild.style.display = 'block';
+        else{
+            let child = elem.children;
+            for(let i = 0; i < child.length; i++){
+                let tableChild = child[i];
+                tableChild.style.display = 'block';
+            }
+            isMenuOpenned = true;
+            menuOpenned = elem;
         }
-        menuOpenned = true;
     }
 }
 
@@ -37,7 +42,6 @@ function calculateDistance(elem, mouseX, mouseY) {
 function calculateCloserFavElement(mouseX,mouseY){
     if(bubblingModeEnable){
         let favElem = document.getElementsByClassName("fav");
-        console.log(favElem);
         let distancies = [];
         for (let i = 0; i < favElem.length; i++) {
             distancies[i] = calculateDistance(favElem[i],mouseX,mouseY);
@@ -51,13 +55,10 @@ function calculateCloserFavElement(mouseX,mouseY){
         }
         closerFavElem = favElem[closerElemIndex];
         closerFavElem.classList.add("isClose");
-        console.log(closerFavElem);
     }
 }
 
 function setCanva() {
-    console.log(window.innerHeight);
-    console.log(window.innerWidth);
     document.getElementById("canva").setAttribute('width',window.innerWidth);
     document.getElementById("canva").setAttribute('height',window.innerHeight);
 }
@@ -66,7 +67,6 @@ function mouseMoving(e) {
     let canva = document.getElementById('canva');
     calculateCloserFavElement(e.clientX,e.clientY);
     if (bubblingModeEnable) {
-        console.log("Bubbling is on, mouse is moving" + e.clientX + ' ' + e.clientY);
         canva = document.getElementById('canva');
         let mouseX = e.clientX;
         let mouseY = e.clientY;
@@ -75,7 +75,6 @@ function mouseMoving(e) {
         context.beginPath();
         let favMenu = closerFavElem;
         let dist = calculateDistance(favMenu, mouseX, mouseY);
-        console.log(dist);
         context.arc(mouseX, mouseY, dist, 0, 2 * Math.PI, true);
         context.fillStyle = "#006400";
         context.fill();
@@ -85,6 +84,17 @@ function mouseMoving(e) {
 function mouseClicked(e) {
     if(bubblingModeEnable){
         openMenu(closerFavElem);
+    }
+}
+
+function endingBubbleMenu(){
+    let navBar = document.getElementsByClassName("navbar")[0];
+    let childrens = navBar.children;
+    for(let i = 0; i<childrens.length; i++) {
+        childrens[i].classList.remove("isClose");
+    }
+    if(isMenuOpenned){
+        openMenu(menuOpenned);
     }
 }
 
@@ -100,6 +110,7 @@ document.onkeyup = function (e) {
         canva = document.getElementById('canva');
         context = canva.getContext('2d')
         context.clearRect(0,0,canva.width,canva.height);
+        endingBubbleMenu();
     }
 }
 
