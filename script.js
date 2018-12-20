@@ -115,6 +115,7 @@ function mouseMoving(e) {
 
 function mouseClicked(e) {
     if(bubblingModeEnable){
+        endingBubbleMenu();
         openMenu(closerFavElem);
     }
 }
