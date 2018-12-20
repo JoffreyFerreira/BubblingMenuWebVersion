@@ -35,10 +35,6 @@ function offset(el) {
     return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 }
 
-function calculateDistance(elem, mouseX, mouseY) {
-    return Math.floor(Math.sqrt(Math.pow(mouseX - (offset(elem).left+(elem.offsetWidth/2)), 2) + Math.pow(mouseY - (offset(elem).top+(elem.offsetHeight/2)), 2)));
-}
-
 function calculateDistanceBubble(elem, mouseX, mouseY) {
     if(mouseX<=offset(elem).left){
         if(mouseY<=offset(elem).top){
