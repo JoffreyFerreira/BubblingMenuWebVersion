@@ -39,6 +39,28 @@ function calculateDistance(elem, mouseX, mouseY) {
     return Math.floor(Math.sqrt(Math.pow(mouseX - (offset(elem).left+(elem.offsetWidth/2)), 2) + Math.pow(mouseY - (offset(elem).top+(elem.offsetHeight/2)), 2)));
 }
 
+function calculateDistanceBubble(elem, mouseX, mouseY) {
+    let x = 0;
+    let y = 0;
+
+    if(mouseX<=offset(elem).left){
+        let x = mouseX - offset(elem).left;
+    } else if(mouseX <= offset(elem).left+elem.offsetWidth) {
+        let x = 0;
+    } else {
+        let x = mouseX - (offset(elem).left + elem.offsetWidth);
+    }
+    
+    if(mouseY<=offset(elem).top){
+        let y = mouseY - offset(elem).top;
+    } else if(mouseY <= offset(elem).top+elem.offsetHeight){
+        let y = 0;
+    } else {
+        let y = mouseY - (offset(elem).top + elem.offsetHeight);
+    }
+    return Math.floor(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+}
+
 function calculateCloserFavElement(mouseX,mouseY){
     if(bubblingModeEnable){
         let favElem = document.getElementsByClassName("fav");
@@ -75,6 +97,7 @@ function mouseMoving(e) {
         context.beginPath();
         let favMenu = closerFavElem;
         let dist = calculateDistance(favMenu, mouseX, mouseY);
+        console.log(dist);
         context.arc(mouseX, mouseY, dist, 0, 2 * Math.PI, true);
         context.fillStyle = "#006400";
         context.fill();
