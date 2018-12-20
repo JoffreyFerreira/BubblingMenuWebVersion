@@ -40,25 +40,34 @@ function calculateDistance(elem, mouseX, mouseY) {
 }
 
 function calculateDistanceBubble(elem, mouseX, mouseY) {
-    let x = 0;
-    let y = 0;
-
     if(mouseX<=offset(elem).left){
-        let x = mouseX - offset(elem).left;
+        if(mouseY<=offset(elem).top){
+            return Math.floor(Math.sqrt(Math.pow(mouseX - offset(elem).left, 2) + Math.pow(mouseY - offset(elem).top, 2))); 
+        } else if(mouseY <= offset(elem).top+elem.offsetHeight){
+            return Math.floor(Math.sqrt(Math.pow(mouseX - offset(elem).left, 2))); 
+        } else {
+            return Math.floor(Math.sqrt(Math.pow(mouseX - offset(elem).left, 2) + Math.pow( mouseY - (offset(elem).top + elem.offsetHeight), 2))); 
+        }
+
     } else if(mouseX <= offset(elem).left+elem.offsetWidth) {
-        let x = 0;
+        if(mouseY<=offset(elem).top){
+            return Math.floor(mouseY - offset(elem).top); 
+        } else if(mouseY <= offset(elem).top+elem.offsetHeight){
+            return 0; 
+        } else {
+            return Math.floor(Math.sqrt(Math.pow( mouseY - (offset(elem).top + elem.offsetHeight), 2))); 
+        }
     } else {
         let x = mouseX - (offset(elem).left + elem.offsetWidth);
+        if(mouseY<=offset(elem).top){
+            return Math.floor(Math.sqrt(Math.pow(mouseX - (offset(elem).left + elem.offsetWidth), 2) + Math.pow(mouseY - offset(elem).top, 2))); 
+        } else if(mouseY <= offset(elem).top+elem.offsetHeight){
+            return Math.floor(Math.sqrt(Math.pow(mouseX - (offset(elem).left + elem.offsetWidth), 2))); 
+        } else {
+            return Math.floor(Math.sqrt(Math.pow(mouseX - (offset(elem).left + elem.offsetWidth), 2) + Math.pow( mouseY - (offset(elem).top + elem.offsetHeight), 2))); 
+        }
     }
-    
-    if(mouseY<=offset(elem).top){
-        let y = mouseY - offset(elem).top;
-    } else if(mouseY <= offset(elem).top+elem.offsetHeight){
-        let y = 0;
-    } else {
-        let y = mouseY - (offset(elem).top + elem.offsetHeight);
-    }
-    return Math.floor(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+    // return Math.floor(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
 }
 
 function calculateCloserFavElement(mouseX,mouseY){
@@ -66,7 +75,7 @@ function calculateCloserFavElement(mouseX,mouseY){
         let favElem = document.getElementsByClassName("fav");
         let distancies = [];
         for (let i = 0; i < favElem.length; i++) {
-            distancies[i] = calculateDistance(favElem[i],mouseX,mouseY);
+            distancies[i] = calculateDistanceBubble(favElem[i],mouseX,mouseY);
             favElem[i].classList.remove("isClose");
         }
         let closerElemIndex = 0;
@@ -96,7 +105,7 @@ function mouseMoving(e) {
         context.clearRect(0, 0, canva.width, canva.height);
         context.beginPath();
         let favMenu = closerFavElem;
-        let dist = calculateDistance(favMenu, mouseX, mouseY);
+        let dist = calculateDistanceBubble(favMenu, mouseX, mouseY);
         console.log(dist);
         context.arc(mouseX, mouseY, dist, 0, 2 * Math.PI, true);
         context.fillStyle = "#006400";
