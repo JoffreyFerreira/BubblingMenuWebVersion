@@ -1,5 +1,6 @@
  /* Navbar container */
 .navbar {
+  z-index: 11;
   overflow: hidden;
   background-color: #333;
   font-family: Arial;
@@ -34,7 +35,7 @@
 }
 
 /* Add a red background color to navbar links on hover */
-.navbar a:hover, .dropdown:hover .dropbtn {
+.navbar a:focus, .dropdown:focus .dropbtn {
   background-color: red;
 }
 
@@ -63,7 +64,13 @@
   background-color: #ddd;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-} 
+.fav {
+  color : green;
+}
+
+#canva{
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:-1;
+}

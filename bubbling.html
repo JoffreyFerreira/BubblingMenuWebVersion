@@ -1,8 +1,15 @@
- <div class="navbar">
-  
-  <div class="dropdown">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <link rel="stylesheet" href="bubbling.css">
+  <script type="text/javascript" src="script.js"></script>
+</head>
+<body onload="setCanva()" onresize="setCanva()">
+<div class="navbar" >
+
+  <div class="dropdown" onclick="openMenu(this)">
     <button class="dropbtn">Menu1
-      <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
       <a href="#">Link 1-1</a>
@@ -11,9 +18,8 @@
     </div>
   </div>
 
-  <div class="dropdown">
+  <div class="dropdown fav" id="fav1" onclick="openMenu(this)">
     <button class="dropbtn">Menu2
-      <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
       <a href="#">Link 2-1</a>
@@ -21,10 +27,9 @@
       <a href="#">Link 2-3</a>
     </div>
   </div>
-  
-  <div class="dropdown">
+
+  <div class="dropdown fav" id="fav2" onclick="openMenu(this)">
     <button class="dropbtn">Menu3
-      <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
       <a href="#">Link 3-1</a>
@@ -32,4 +37,8 @@
       <a href="#">Link 3-3</a>
     </div>
   </div>
-</div> 
+
+</div>
+<canvas id="canva"></canvas>
+</body>
+</html>
