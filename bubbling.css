@@ -34,11 +34,6 @@
   margin: 0; /* Important for vertical align on mobile phones */
 }
 
-/* Add a red background color to navbar links on hover */
-.navbar a:focus, .dropdown:focus .dropbtn {
-  background-color: red;
-}
-
 /* Dropdown content (hidden by default) */
 .dropdown-content {
   display: none;
@@ -61,11 +56,15 @@
 
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #006400;
 }
 
 .fav {
-  color : green;
+  background-color : green;
+}
+
+.isClose{
+  background-color: #006400;
 }
 
 #canva{

@@ -35,20 +35,24 @@ function calculateDistance(elem, mouseX, mouseY) {
 }
 
 function calculateCloserFavElement(mouseX,mouseY){
-    let favElem = document.getElementsByClassName("fav");
-    console.log(favElem);
-    let distancies = [];
-    for (let i = 0; i < favElem.length; i++) {
-        distancies[i] = calculateDistance(favElem[i],mouseX,mouseY);
-    }
-    let closerElemIndex = 0;
-    for(let i = 0; i < distancies.length; i++) {
-        if (distancies[i] < distancies[closerElemIndex]){
-            closerElemIndex = i;
+    if(bubblingModeEnable){
+        let favElem = document.getElementsByClassName("fav");
+        console.log(favElem);
+        let distancies = [];
+        for (let i = 0; i < favElem.length; i++) {
+            distancies[i] = calculateDistance(favElem[i],mouseX,mouseY);
+            favElem[i].classList.remove("isClose");
         }
+        let closerElemIndex = 0;
+        for(let i = 0; i < distancies.length; i++) {
+            if (distancies[i] < distancies[closerElemIndex]){
+                closerElemIndex = i;
+            }
+        }
+        closerFavElem = favElem[closerElemIndex];
+        closerFavElem.classList.add("isClose");
+        console.log(closerFavElem);
     }
-    closerFavElem = favElem[closerElemIndex];
-    console.log(closerFavElem);
 }
 
 function setCanva() {
@@ -73,7 +77,7 @@ function mouseMoving(e) {
         let dist = calculateDistance(favMenu, mouseX, mouseY);
         console.log(dist);
         context.arc(mouseX, mouseY, dist, 0, 2 * Math.PI, true);
-        context.fillStyle = "#FF6A6A";
+        context.fillStyle = "#006400";
         context.fill();
     }
 }
